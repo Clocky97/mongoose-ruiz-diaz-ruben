@@ -12,7 +12,7 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find({ deleted: false }).populate("author", "username email").populate("tags", "name");
+    const posts = await PostModel.find({ deleted: false }).populate("author", "profile").populate("tags", "name");
     res.status(200).json({ ok: true, data: posts });
   } catch (err) {
     res.status(500).json({ ok: false, msg: "Error interno" });
@@ -40,7 +40,7 @@ export const deletePost = async (req, res) => {
 export const addTagToPost = async (req, res) => {
   try {
     const { tagName } = req.body;
-    let tag = await TagModel.findOne({ name: tagName });
+    const tag = await TagModel.findOne({ name: tagName });
     if (!tag) tag = await TagModel.create({ name: tagName });
     const post = await PostModel.findByIdAndUpdate(req.params.id, { $addToSet: { tags: tag._id } }, { new: true }).populate("tags", "name");
     res.status(200).json({ ok: true, data: post });

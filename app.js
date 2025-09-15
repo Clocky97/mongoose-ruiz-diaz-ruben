@@ -10,15 +10,17 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-await connectDB(process.env.MONGO_URL);
+const PORT = process.env.PORT || 1212;
+
+await connectDB();
 
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/profiles", profileRoutes);
 app.use("/api/tags", tagRoutes);
 
-app.get("/", (req, res) => res.send("Mongoose basic API running"));
+app.get("/", (req, res) => res.send("Mongoose API funcionando"));
 
-app.listen(process.env.PORT || 1212, () => {
-  console.log("Server running on port", process.env.PORT || 1212);
+app.listen(PORT, () => {
+  console.log("Servervidor funcionando en", PORT);
 });

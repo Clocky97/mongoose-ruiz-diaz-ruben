@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const ProfileSchema = new mongoose.Schema({
-  bio: String,
-  phone: String,
-  avatarUrl: String,
+  bio: {type: String},
+  phone: {type: String},
+  avatarUrl: {type: String},
   active: { type: Boolean, default: true }
 }, { timestamps: true });
 
